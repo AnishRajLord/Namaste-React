@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const [btnNameLogin, setBtnNameLogin] = useState("Login");
-  console.log("Header render")
+  console.log("Header render");
 
   //if no dependency array ==> useEffect is called on every render
   //if dependency array is empty =[] ==> useEffect is called on initial render(just once)
@@ -18,15 +18,27 @@ const Header = () => {
   return (
     <div className="header">
       <div className="logo-container">
-        <img className="logo" src={LOGO_URL} />
+        <Link to="/">
+          <img className="logo" src={LOGO_URL} alt="Logo" />
+        </Link>
       </div>
       <div className="nav-items">
         <ul>
-          <li><Link to="/">Home</Link></li>
           <li>
-          <Link to="/about">About Us</Link>
+            <Link style={{ textDecoration: "none" }} to="/">
+              Home
+            </Link>
           </li>
-          <li><Link to="/contact">Contact Us</Link></li>
+          <li>
+            <Link style={{ textDecoration: "none" }} to="/about">
+              About Us
+            </Link>
+          </li>
+          <li>
+            <Link style={{ textDecoration: "none" }} to="/contact">
+              Contact Us
+            </Link>
+          </li>
           <li>Cart</li>
           <button
             className="login"
