@@ -1,45 +1,53 @@
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
 import { MENU_API } from "../utils/constants";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
 
 const RestaurantMenu = () => {
-  const [resInfo, setResInfo] = useState(null);
-
+  // const [resInfo, setResInfo] = useState(null);
   const { restaurantId } = useParams();
+  const resInfo = useRestaurantMenu(restaurantId);
 
-  useEffect(() => {
-    fetchMenu();
-  }, []);
+  // Here we are fetching the data now we are fetching the data using Cutom Hook i.e. useRestaurentMenu Hook
+  //Previously we were following the below code
+  // useEffect(() => {
+  //   fetchMenu();
+  // }, []);
 
+  // const fetchMenu = async () => {
+  //   const data = await fetch(
+  //     MENU_API + restaurantId
+  //   );
 
-  const fetchMenu = async () => {
-    const data = await fetch(
-      MENU_API + restaurantId
-    );
+  //   const json = await data.json();
+  //   setResInfo(json.data);
+  //   //console.log(resInfo?.cards[2]?.card?.card?.info.name)
+  // };
 
-    const json = await data.json();
-    setResInfo(json.data);
-    //console.log(resInfo?.cards[2]?.card?.card?.info.name)
-  };
-
-
-  if (resInfo === null) return <Shimmer />
-
-
+  if (resInfo === null) return <Shimmer />;
   const { name, cuisines, costForTwoMessage } = resInfo?.cards[2]?.card?.card?.info;
-
   const { itemCards } = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[4]?.card?.card;
   //console.log(itemCards)
   //console.log("Price",resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card.itemCards)
 
-  return  (
+  return (
     <div className="menu">
-      <h1> { name } </h1>
-      <p> { cuisines.join(", ")}{" "}-{" "} {  costForTwoMessage }</p> 
+      <h1> {name} </h1>
+      <p>
+        {" "}
+        {cuisines.join(", ")} - {costForTwoMessage}
+      </p>
       <h2>Menu</h2>
       <ul>
-      {itemCards.map((item)=> <li key={item?.card?.info?.id} >{item?.card?.info?.name} - { "Rs."} {item?.card?.info?.price ? (item?.card?.info?.price / 100 + "/-") : (item?.card?.info?.defaultPrice / 100 + "/-")}</li>)}
+        {itemCards.map((item) => (
+          <li key={item?.card?.info?.id}>
+            {item?.card?.info?.name} - {"Rs."}{" "}
+            {item?.card?.info?.price
+              ? item?.card?.info?.price / 100 + "/-"
+              : item?.card?.info?.defaultPrice / 100 + "/-"}
+          </li>
+        ))}
       </ul>
     </div>
   );

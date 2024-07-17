@@ -1,81 +1,16 @@
 import RestaurantCard from "./RestaurantCard";
-//import resList from "../utils/mockData";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
-import { MENU_API } from "../utils/constants";
+import { RESTAURENT_API } from "../utils/constants";
 
 const Body = () => {
-  //Local State Varibale
-  // const [listOfRestraurants, setListOfRestraurant] = useState([
-  //   {
-  //     data: {
-  //       id: "334475",
-  //       name: "KFC",
-  //       cloudinaryImageId: "ldtibwymvzehvmdwl8la",
-  //       cuisines: ["Desserts", "Ice Cream", "Healthy Food"],
-  //       costForTwo: 20000,
-  //       deliveryTime: 31,
-  //       avgRating: "4.8",
-  //     },
-  //   },
-  //   {
-  //     data: {
-  //       id: "334476",
-  //       name: "Dominos",
-  //       cloudinaryImageId: "ldtibwymvzehvmdwl8la",
-  //       cuisines: ["Desserts", "Ice Cream", "Healthy Food"],
-  //       costForTwo: 20000,
-  //       deliveryTime: 35,
-  //       avgRating: "3.9",
-  //     },
-  //   },
-  //   {
-  //     data: {
-  //       id: "334479",
-  //       name: "MCD",
-  //       cloudinaryImageId: "ldtibwymvzehvmdwl8la",
-  //       cuisines: ["Desserts", "Ice Cream", "Healthy Food"],
-  //       costForTwo: 20000,
-  //       deliveryTime: 35,
-  //       avgRating: "4.2",
-  //     },
-  //   },
-  // ]);
-
-  //Normal JS Variable
-
-  // let listOfRestraurantsJS = [
-  //   {
-  //     data: {
-  //       id: "334475",
-  //       name: "KFC",
-  //       cloudinaryImageId: "ldtibwymvzehvmdwl8la",
-  //       cuisines: ["Desserts", "Ice Cream", "Healthy Food"],
-  //       costForTwo: 20000,
-  //       deliveryTime: 31,
-  //       avgRating: "4.8",
-  //     },
-  //   },
-  //   {
-  //     data: {
-  //       id: "334476",
-  //       name: "Dominos",
-  //       cloudinaryImageId: "ldtibwymvzehvmdwl8la",
-  //       cuisines: ["Desserts", "Ice Cream", "Healthy Food"],
-  //       costForTwo: 20000,
-  //       deliveryTime: 35,
-  //       avgRating: "3.9",
-  //     },
-  //   },
-  // ];
-
   const [listOfRestraurants, setListOfRestraurant] = useState([]);
-  const [filteredRestraurant, setFilteredRestraurant] = useState([])
+  const [filteredRestraurant, setFilteredRestraurant] = useState([]);
   const [searchText, setSearchText] = useState("");
 
   //Whenever state variables update, react triggers a reconciliation cycle(re-renders the component)
-  console.log("Body Rendered")
+  console.log("Body Rendered");
 
   useEffect(() => {
     fetchData();
@@ -83,9 +18,7 @@ const Body = () => {
 
   const fetchData = async () => {
     try {
-      const data = await fetch(
-         "https://www.swiggy.com/dapi/restaurants/list/v5?lat=20.2942254&lng=85.744396&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-      );
+      const data = await fetch(RESTAURENT_API);
       const json = await data.json();
       //console.log( json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants );
       //Optional Chaining
@@ -114,16 +47,18 @@ const Body = () => {
             className="search-box"
             value={searchText}
             onChange={(e) => {
-              setSearchText(e.target.value)
+              setSearchText(e.target.value);
             }}
           />
           <button
             onClick={() => {
               // Search Input Functionality
-              console.log(searchText)
-              const filteredRestraurant = listOfRestraurants.filter((res) =>res.info.name.toLowerCase().includes(searchText.toLowerCase()));
+              console.log(searchText);
+              const filteredRestraurant = listOfRestraurants.filter((res) =>
+                res.info.name.toLowerCase().includes(searchText.toLowerCase())
+              );
               // console.log(filteredRestraurant);
-              setFilteredRestraurant(filteredRestraurant)
+              setFilteredRestraurant(filteredRestraurant);
             }}
           >
             Search
@@ -144,7 +79,13 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filteredRestraurant.map((restaurant) => (
-          <Link key={restaurant.info.id} to={"/restaurants/"+restaurant.info.id}> <RestaurantCard  resData={restaurant} /> </Link>
+          <Link
+            key={restaurant.info.id}
+            to={"/restaurants/" + restaurant.info.id}
+          >
+            {" "}
+            <RestaurantCard resData={restaurant} />{" "}
+          </Link>
         ))}
       </div>
     </div>
