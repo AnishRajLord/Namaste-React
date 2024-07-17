@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { RESTAURENT_API } from "../utils/constants";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   const [listOfRestraurants, setListOfRestraurant] = useState([]);
@@ -34,6 +35,14 @@ const Body = () => {
       console.error("Error fetching data:", error);
     }
   };
+
+  const onlineStatus = useOnlineStatus();
+  if (onlineStatus === false)
+    return (
+      <h1>
+        Looks Like you are offline!! Please check your Internet Connection
+      </h1>
+    );
 
   //Conditional Rendering
   return listOfRestraurants.length === 0 ? (

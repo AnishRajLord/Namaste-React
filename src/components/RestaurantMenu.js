@@ -3,12 +3,19 @@ import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
 import { MENU_API } from "../utils/constants";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const RestaurantMenu = () => {
   // const [resInfo, setResInfo] = useState(null);
   const { restaurantId } = useParams();
   const resInfo = useRestaurantMenu(restaurantId);
-
+  const onlineStatus = useOnlineStatus();
+  if (onlineStatus === false)
+    return (
+      <h1>
+        Looks Like you are offline!! Please check your Internet Connection
+      </h1>
+    );
   // Here we are fetching the data now we are fetching the data using Cutom Hook i.e. useRestaurentMenu Hook
   //Previously we were following the below code
   // useEffect(() => {
