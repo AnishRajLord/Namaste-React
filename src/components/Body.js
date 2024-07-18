@@ -11,7 +11,7 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
 
   //Whenever state variables update, react triggers a reconciliation cycle(re-renders the component)
-  console.log("Body Rendered");
+  console.log("Body Rendered", listOfRestraurants);
 
   useEffect(() => {
     fetchData();
@@ -49,17 +49,18 @@ const Body = () => {
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter">
-        <div className="search">
+      <div className="flex mx-4 p-4 items-center justify-center">
           <input
             type="text"
-            className="search-box"
+            className="border border-solid border-black rounded-md h-10 w-56 pl-2"
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
             }}
+            placeholder="🔎  Search..."
           />
           <button
+            className="px-6 py-2 bg-white border-2 m-4 rounded-lg text-green-700 font-bold border-green-700"
             onClick={() => {
               // Search Input Functionality
               console.log(searchText);
@@ -70,23 +71,24 @@ const Body = () => {
               setFilteredRestraurant(filteredRestraurant);
             }}
           >
-            Search
+           Search
           </button>
-        </div>
-        <button
-          className="filter-btn"
-          onClick={() => {
-            //Filter Logic
-            const filteredList = listOfRestraurants.filter(
-              (res) => res.data.avgRating > 4
-            );
-            setListOfRestraurant(filteredList);
-          }}
-        >
-          Top Rated Button
-        </button>
+        
+          <button
+            className="px-4 py-2 bg-orange-500 font-bold text-white rounded-lg"
+            onClick={() => {
+              //Filter Logic
+              const filteredList = listOfRestraurants.filter(
+                (res) => res.info.avgRating > 4.4
+              );
+              setFilteredRestraurant(filteredList);
+            }}
+          >
+            Top Rated Button
+          </button>
+        
       </div>
-      <div className="res-container">
+      <div className="flex flex-wrap items-center justify-center">
         {filteredRestraurant.map((restaurant) => (
           <Link
             key={restaurant.info.id}

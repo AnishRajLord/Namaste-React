@@ -18,40 +18,40 @@ const Header = () => {
   });
 
   return (
-    <div className="header">
+    <div className="flex justify-between shadow-lg sticky top-0 bg-white z-50">
       <div className="logo-container">
         <Link to="/">
-          <img className="logo" src={LOGO_URL} alt="Logo" />
+          <img className="w-36" src={LOGO_URL} alt="Logo" />
         </Link>
       </div>
-      <div className="nav-items">
-        <ul>
-          <li>
-            Online Status : {onlineStatus ? "✅" : "🔴" }
+      <div className="flex items-center">
+        <ul className="flex p-4 m-4">
+          <li className="px-4 font-medium cursor-pointer text-xl">
+            Online Status : {onlineStatus ? "✅" : "🔴"}
           </li>
-          <li>
+          <li className="px-4 font-medium cursor-pointer text-xl">
             <Link style={{ textDecoration: "none" }} to="/">
-              Home
+              🏠 Home
             </Link>
           </li>
-          <li>
+          <li className="px-4 font-medium cursor-pointer text-xl">
             <Link style={{ textDecoration: "none" }} to="/about">
-              About Us
+              ℹ About Us
             </Link>
           </li>
-          <li>
+          <li className="px-4 font-medium cursor-pointer text-xl">
             <Link style={{ textDecoration: "none" }} to="/contact">
-              Contact Us
+              ✉ Contact Us
             </Link>
           </li>
-          <li>
+          <li className="px-4 font-medium cursor-pointer text-xl">
             <Link style={{ textDecoration: "none" }} to="/grocery">
-              Grocery
+              🏬 Grocery
             </Link>
           </li>
-          <li>Cart</li>
+          <li className="px-4 font-medium cursor-pointer text-xl">🛒 Cart</li>
           <button
-            className="login"
+            className="px-4 font-medium cursor-pointer text-xl"
             onClick={() => {
               btnNameLogin === "Login"
                 ? setBtnNameLogin("Logout")
