@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { openRestaurent } from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -12,6 +12,8 @@ const Body = () => {
 
   //Whenever state variables update, react triggers a reconciliation cycle(re-renders the component)
   console.log("Body Rendered", listOfRestraurants);
+
+  const RestaurentCardOpen = openRestaurent(RestaurantCard);  //Higher Order Components
 
   useEffect(() => {
     fetchData();
@@ -50,43 +52,42 @@ const Body = () => {
   ) : (
     <div className="body">
       <div className="flex mx-4 p-4 items-center justify-center">
-          <input
-            type="text"
-            className="border border-solid border-black rounded-md h-10 w-56 pl-2"
-            value={searchText}
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
-            placeholder="🔎  Search..."
-          />
-          <button
-            className="px-6 py-2 bg-white border-2 m-4 rounded-lg text-green-700 font-bold border-green-700"
-            onClick={() => {
-              // Search Input Functionality
-              console.log(searchText);
-              const filteredRestraurant = listOfRestraurants.filter((res) =>
-                res.info.name.toLowerCase().includes(searchText.toLowerCase())
-              );
-              // console.log(filteredRestraurant);
-              setFilteredRestraurant(filteredRestraurant);
-            }}
-          >
-           Search
-          </button>
-        
-          <button
-            className="px-4 py-2 bg-orange-500 font-bold text-white rounded-lg"
-            onClick={() => {
-              //Filter Logic
-              const filteredList = listOfRestraurants.filter(
-                (res) => res.info.avgRating > 4.4
-              );
-              setFilteredRestraurant(filteredList);
-            }}
-          >
-            Top Rated Button
-          </button>
-        
+        <input
+          type="text"
+          className="border border-solid border-black rounded-md h-10 w-56 pl-2"
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+          }}
+          placeholder="🔎  Search..."
+        />
+        <button
+          className="px-6 py-2 bg-white border-2 m-4 rounded-lg text-green-700 font-bold border-green-700"
+          onClick={() => {
+            // Search Input Functionality
+            console.log(searchText);
+            const filteredRestraurant = listOfRestraurants.filter((res) =>
+              res.info.name.toLowerCase().includes(searchText.toLowerCase())
+            );
+            // console.log(filteredRestraurant);
+            setFilteredRestraurant(filteredRestraurant);
+          }}
+        >
+          Search
+        </button>
+
+        <button
+          className="px-4 py-2 bg-orange-500 font-bold text-white rounded-lg"
+          onClick={() => {
+            //Filter Logic
+            const filteredList = listOfRestraurants.filter(
+              (res) => res.info.avgRating > 4.4
+            );
+            setFilteredRestraurant(filteredList);
+          }}
+        >
+          Top Rated Button
+        </button>
       </div>
       <div className="flex flex-wrap items-center justify-center">
         {filteredRestraurant.map((restaurant) => (
@@ -94,8 +95,12 @@ const Body = () => {
             key={restaurant.info.id}
             to={"/restaurants/" + restaurant.info.id}
           >
-            {" "}
-            <RestaurantCard resData={restaurant} />{" "}
+            {restaurant.info.availability.opened ? (
+              //Higher Order Components
+              <RestaurentCardOpen resData={restaurant} />
+            ) : (
+              <RestaurantCard resData={restaurant} />
+            )}
           </Link>
         ))}
       </div>
