@@ -5,6 +5,7 @@ import { MENU_API } from "../utils/constants";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { CDN_URL } from "../utils/constants";
+import RestaurantCategory from "./RestaurantCategory";
 
 const RestaurantMenu = () => {
   // const [resInfo, setResInfo] = useState(null);
@@ -37,23 +38,27 @@ const RestaurantMenu = () => {
   const { name, cuisines, costForTwoMessage } =
     resInfo?.cards[2]?.card?.card?.info;
   const { itemCards } =
-    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[4]?.card?.card;
+    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
   //console.log(itemCards)
   //console.log("Price",resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card.itemCards)
+  //console.log("Info",resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards)
+
+  const categories =
+    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+      (c) =>
+        c.card?.card?.["@type"] ==
+        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+    );
+  console.log("Categories", categories);
 
   return (
-    <div className="menu">
-      <div className="flex flex-col justify-center items-center p-2 rounded-xl mt-4">
-        <div className="border-2 border-gray-200 bg-gradient-to-r from-gray-50 to-gray-200 p-2 rounded-lg">
-          <div className="bg-white p-4 border-2 border-gray-300 rounded-lg">
-            <h1 className="font-bold text-2xl m-4"> {name} </h1>
-            <p className="font-semibold text-xl ml-4">
-              {cuisines.join(", ")} - {costForTwoMessage}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div>
+    <div className="text-center">
+      <h1 className="font-bold text-2xl my-6"> {name} </h1>
+      <p className="font-bold text-lg ml-4">
+        {cuisines.join(", ")} - {costForTwoMessage}
+      </p>
+      {/* This is only for recommended ItemCategory */}
+      {/* <div>
         <h2 className="font-bold text-3xl mx-80">Menu</h2>
         <ul>
           {itemCards.map((item) => (
@@ -85,9 +90,27 @@ const RestaurantMenu = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
+      {/* This is for All Categories */}
+      {categories.map((category) => (
+        <RestaurantCategory data={category?.card?.card} key={category?.card?.card?.title}/>
+      ))}
     </div>
   );
 };
 
 export default RestaurantMenu;
+
+{
+  /* <div className="flex flex-col justify-center items-center p-2 rounded-xl mt-4">
+<div className="flex flex-col justify-center items-center p-2 rounded-xl mt-4">
+  <div className="border-2 border-gray-200 bg-gradient-to-r from-gray-50 to-gray-200 p-2 rounded-lg">
+    <div className="bg-white p-4 border-2 border-gray-300 rounded-lg">
+      <h1 className="font-bold text-2xl m-4"> {name} </h1>
+      <p className="font-semibold text-xl ml-4">
+        {cuisines.join(", ")} - {costForTwoMessage}
+      </p>
+    </div>
+  </div>
+</div> */
+}
