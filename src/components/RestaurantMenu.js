@@ -55,10 +55,14 @@ const RestaurantMenu = () => {
 
   return (
     <div className="text-center">
-      <h1 className="font-bold text-2xl my-6"> {name} </h1>
-      <p className="font-bold text-lg ml-4">
-        {cuisines.join(", ")} - {costForTwoMessage}
-      </p>
+      <div className="border-2 border-gray-200 bg-gradient-to-r from-gray-50 to-gray-200 p-2 w-1/2 rounded-lg flex flex-col m-auto">
+        <div className="bg-white p-4 border-2 border-gray-300 rounded-lg">
+          <h1 className="font-bold text-2xl my-4"> {name} </h1>
+          <p className="font-bold text-lg ml-4">
+            {cuisines.join(", ")} - {costForTwoMessage}
+          </p>
+        </div>
+      </div>
       {/* This is only for recommended ItemCategory */}
       {/* <div>
         <h2 className="font-bold text-3xl mx-80">Menu</h2>
