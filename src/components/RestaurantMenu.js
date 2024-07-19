@@ -6,11 +6,13 @@ import useRestaurantMenu from "../utils/useRestaurantMenu";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { CDN_URL } from "../utils/constants";
 import RestaurantCategory from "./RestaurantCategory";
+import { useState } from "react";
 
 const RestaurantMenu = () => {
   // const [resInfo, setResInfo] = useState(null);
   const { restaurantId } = useParams();
   const resInfo = useRestaurantMenu(restaurantId);
+  const [showIndex, setShowIndex] = useState(0);
   const onlineStatus = useOnlineStatus();
   if (onlineStatus === false)
     return (
@@ -92,15 +94,20 @@ const RestaurantMenu = () => {
         </ul>
       </div> */}
       {/* This is for All Categories */}
-      {categories.map((category) => (
-        <RestaurantCategory data={category?.card?.card} key={category?.card?.card?.title}/>
+      {categories.map((category, index) => (
+        //This is controlled Component
+        <RestaurantCategory
+          data={category?.card?.card}
+          key={category?.card?.card?.title}
+          showItems={index === showIndex}
+          setShowIndex={() => setShowIndex(index === showIndex ? null : index)}
+        />
       ))}
     </div>
   );
 };
 
 export default RestaurantMenu;
-
 {
   /* <div className="flex flex-col justify-center items-center p-2 rounded-xl mt-4">
 <div className="flex flex-col justify-center items-center p-2 rounded-xl mt-4">
