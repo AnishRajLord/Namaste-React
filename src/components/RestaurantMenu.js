@@ -14,6 +14,9 @@ const RestaurantMenu = () => {
   const resInfo = useRestaurantMenu(restaurantId);
   const [showIndex, setShowIndex] = useState(0);
   const onlineStatus = useOnlineStatus();
+
+  const dummy = "Dummy Data"
+
   if (onlineStatus === false)
     return (
       <h1>
@@ -104,7 +107,9 @@ const RestaurantMenu = () => {
           data={category?.card?.card}
           key={category?.card?.card?.title}
           showItems={index === showIndex}
+          //setShowIndex={() => setShowIndex(index)}
           setShowIndex={() => setShowIndex(index === showIndex ? null : index)}
+          dummy={dummy}
         />
       ))}
     </div>

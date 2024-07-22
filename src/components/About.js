@@ -1,6 +1,7 @@
 import React from "react";
 import User from "./User";
 import UserClass from "./UserClass";
+import UserContext from "../utils/UserContext";
 
 class About extends React.Component {
   constructor(props) {
@@ -17,6 +18,12 @@ class About extends React.Component {
     return (
       <div>
         <h1>About</h1>
+        <div>
+          {/* This is way how you can access the context in class base component which takes a callback functuiion */}
+          <UserContext.Consumer>
+            {({ loggedInUser }) => <h1>Logged In user: {loggedInUser}</h1>}
+          </UserContext.Consumer>
+        </div>
         <h2>This is About Section of this application</h2>
         {/* <User name={"Anish (functional)"}/> */}
         <UserClass name={"Anish (Class)"} location={"Bhubaneswar class"} />

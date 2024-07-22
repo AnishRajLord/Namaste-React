@@ -1,14 +1,16 @@
 import { LOGO_URL } from "../utils/constants";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 // let btnName = "Login";
 
 const Header = () => {
   const [btnNameLogin, setBtnNameLogin] = useState("Login");
   const onlineStatus = useOnlineStatus();
-  console.log("Header render");
+
+  const {loggedInUser } = useContext(UserContext)
 
   //if no dependency array ==> useEffect is called on every render
   //if dependency array is empty =[] ==> useEffect is called on initial render(just once)
@@ -60,6 +62,7 @@ const Header = () => {
           >
             {btnNameLogin}
           </button>
+          <li className="px-4 font-medium cursor-pointer text-xl">{loggedInUser}</li>
         </ul>
       </div>
     </div>

@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { CDN_URL } from "../utils/constants";
+import UserContext from "../utils/UserContext";
 
 const RestaurantCard = ({ resData }) => {
   const {
@@ -9,6 +11,12 @@ const RestaurantCard = ({ resData }) => {
     costForTwo,
     sla,
   } = resData?.info;
+
+
+  // just a example that we can use useContext(Context API) anywhere in the application. But for the class based component it will be something different you can check the about us component for that.
+
+  const { loggedInUser } = useContext(UserContext);
+
 
   return (
     <div className="m-4 p-4 w-64 h-88 bg-gray-100 shadow-lg rounded-lg flex flex-col justify-between hover:bg-gray-200">
@@ -23,6 +31,8 @@ const RestaurantCard = ({ resData }) => {
         <h4 className="font-medium py-1" title={avgRating}>{avgRating}</h4>
         <h4 className="font-medium py-1" title={costForTwo}>{costForTwo}</h4>
         <h4 className="font-medium py-1" title={sla?.slaString}>{sla?.slaString}</h4>
+        {/* Context API Uses */}
+        {/* <h4 className="font-medium py-1" title={loggedInUser}>User: {loggedInUser}</h4>  */}
       </div>
     </div>
   );

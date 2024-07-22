@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header"
 import Body from "./components/Body";
@@ -8,6 +8,7 @@ import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Shimmer from "./components/Shimmer";
+import UserContext from "./utils/UserContext";
 //import Grocery from "./components/Grocery"; //Normal laoding it will not split the JS will so it will increase the size of JS file which will impact your performance
 
 
@@ -15,11 +16,27 @@ import Shimmer from "./components/Shimmer";
 
 
 const AppLayout = () => {
+
+
+const [userName, setUserName] =  useState();
+
+// authentication code assumption
+useEffect(() => {
+  //make an api call and send the username and password
+  const data = {
+    name: "Anish"
+  };
+  setUserName(data.name);
+},[]);
+
+
   return (
+    <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
     <div className="app">
       <Header />
       <Outlet/>
     </div>
+    </UserContext.Provider>
   );
 };
 
