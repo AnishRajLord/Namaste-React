@@ -77,7 +77,7 @@ const appRouter = createBrowserRouter([
         element: <RestaurantMenu />,
       },
       {
-        path: "cart", //Dynamic Routing
+        path: "cart",
         element: <Cart />,
       },
     ],
