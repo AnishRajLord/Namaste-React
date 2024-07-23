@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
+import { useSelector } from "react-redux";
 
 // let btnName = "Login";
 
@@ -10,7 +11,11 @@ const Header = () => {
   const [btnNameLogin, setBtnNameLogin] = useState("Login");
   const onlineStatus = useOnlineStatus();
 
-  const {loggedInUser } = useContext(UserContext)
+  const { loggedInUser } = useContext(UserContext);
+
+  // Selector(Subscribing to the store using selector)
+  const cartItems = useSelector((store) => store.cart.items);
+  console.log(cartItems);
 
   //if no dependency array ==> useEffect is called on every render
   //if dependency array is empty =[] ==> useEffect is called on initial render(just once)
@@ -51,7 +56,11 @@ const Header = () => {
               🏬 Grocery
             </Link>
           </li>
-          <li className="px-4 font-medium cursor-pointer text-xl">🛒 Cart</li>
+          <li className="px-4 font-medium cursor-pointer text-xl">
+          <Link style={{ textDecoration: "none" }} to="/cart">
+            🛒 Cart ({cartItems.length} Items)
+          </Link>
+          </li>
           <button
             className="px-4 font-medium cursor-pointer text-xl"
             onClick={() => {
@@ -62,7 +71,9 @@ const Header = () => {
           >
             {btnNameLogin}
           </button>
-          <li className="px-4 font-medium cursor-pointer text-xl">{loggedInUser}</li>
+          <li className="px-4 font-medium cursor-pointer text-xl">
+            {loggedInUser}
+          </li>
         </ul>
       </div>
     </div>

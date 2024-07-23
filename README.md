@@ -82,3 +82,12 @@ Render (dummy)
 render(API calls)
 <HTML (new Api data)>
 Component Did Update
+
+
+# Redux toolkit
+- install @reduxjs/toolkit and react-redux
+- Build our store
+- connect our store to our app
+- Slice(cart slice)
+- Dispatch an action
+- Selector
